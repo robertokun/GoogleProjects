@@ -15,10 +15,15 @@
 # add 'ly' instead.
 # If the string length is less than 3, leave it unchanged.
 # Return the resulting string.
-def verbing(s):
-  # +++your code here+++
-  return
 
+
+def verbing(s):
+    if len(s) >= 3:
+        if s[-3:] == 'ing':
+        print s + 'ly'
+    print s + 'ing'
+    return
+test(verbing())
 
 # E. not_bad
 # Given a string, find the first appearance of the
