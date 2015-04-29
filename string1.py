@@ -26,12 +26,9 @@
 
 
 def donuts(count):
-    if donuts(count) >= 10:
-        print 'Number of donuts: many'
-    else:
-        print 'Number of donuts: %d' % count
-    test()
-    return
+    if count >= 10:
+        return 'Number of donuts: many'
+    return 'Number of donuts: %d' % count
 
 
 # B. both_ends
@@ -42,11 +39,10 @@ def donuts(count):
 
 
 def both_ends(s):
-    if len(test(both_ends(s))) <= 2:
-        print ' '
-    print test(both_ends(s))[0:2] + test(both_ends(s))[-2:]
-    print both_ends(test(both_ends(s)))
-    return
+    if len(s) < 2:
+        return ''
+    return s[0:2] + s[-2:]
+    # return '' if len(s) < 2 else s[0:2] + s[-2:]
 
 
 # C. fix_start
@@ -61,12 +57,7 @@ def both_ends(s):
 
 
 def fix_start(s):
-    first_Char = s[0]
-    print first_Char
-    newstring = s.replace(first_Char, '*')
-    print first_Char + newstring[1:]
-print fix_start(test(fix_start()))
-    return
+    return s[0] + s[1:].replace(s[0], '*')
 
 
 # D. MixUp
@@ -79,11 +70,7 @@ print fix_start(test(fix_start()))
 
 
 def mix_up(a, b):
-    first_two_a = a[0:2]
-    first_two_b = b[0:2]
-    print first_two_b + a[3:] + ' ' + first_two_a + b[3:]
-print mix_up(a, b)
-    return
+    return b[0:2] + a[2:] + ' ' + a[0:2] + b[2:]
 
 
 # Provided simple test() function used in main() to print
