@@ -20,10 +20,11 @@
 def verbing(s):
     if len(s) >= 3:
         if s[-3:] == 'ing':
-        print s + 'ly'
-    print s + 'ing'
-    return
-test(verbing())
+            return s + 'ly'
+        return s + 'ing'
+    return s
+
+
 
 # E. not_bad
 # Given a string, find the first appearance of the
@@ -40,7 +41,7 @@ def not_bad(s):
         if s.index('not') < s.index('bad'):
             nots = s.index('not')
             bad = s.index('bad')
-            print s.replace(s[nots:(bad + 2)], 'good')
+            return s.replace(s[nots:(bad + 3)], 'good')
     return
 
 
@@ -48,15 +49,31 @@ def not_bad(s):
 # Consider dividing a string into two halves.
 # If the length is even, the front and back halves are the same length.
 # If the length is odd, we'll say that the extra char goes in the front half.
-# e.g. 'abcde', the front half is 'abc', the back half 'de'.
+# e.g. 'abcde', the front half is 'abc', the back half 'de'. todo:so abcde --> adbec?
 # Given 2 strings, a and b, return a string of the form
 #  a-front + b-front + a-back + b-back
+# a: froggggerwhatamakcallithdsdfhidh      b: houseis bigger than most of all the other houses
+# fr og     hou se
+# frhouogse
 
 
 def front_back(a, b):
-    if len(s) % 2 == 0:
-        
-    return
+    if len(a) % 2 == 0:
+        front_a = a[0:len(a) / 2]
+        back_a = a[len(a) / 2:]
+    else:
+        front_a = a[0:(len(a) / 2) + 1]
+        back_a = a[(len(a) / 2) + 1:]
+    if len(b) % 2 == 0:
+        front_b = b[0:len(b) / 2]
+        back_b = b[len(b) / 2:]
+    else:
+        front_b = b[0:(len(b) / 2) + 1]
+        back_b = b[(len(b) / 2) + 1:]
+    return front_a + front_b + back_a + back_b
+        # return a[0:len(a) / 2] + b[0:(len(b)/2) + 1] + a[(len(a) / 2) + 1:] + b[(len(b) / 2) + 1:]
+
+
 
 
 # Simple provided test() function used in main() to print
@@ -65,9 +82,9 @@ def front_back(a, b):
 
 def test(got, expected):
     if got == expected:
-    prefix = ' OK '
+        prefix = ' OK '
     else:
-    prefix = '  X '
+        prefix = '  X '
     print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
 
 
