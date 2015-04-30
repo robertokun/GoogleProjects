@@ -41,11 +41,13 @@ def match_ends(words):
 
 def front_x(words):
     xlist = []
+    new_words = []
     for i in words:
         if i[0] == 'x':
             xlist.append(i)
-            words.remove(i)
-    return sorted(xlist) + sorted(words)
+        else:
+            new_words.append(i)
+    return sorted(xlist) + sorted(new_words)
 # why does it not go through to the last item?
 
 # C. sort_last
@@ -57,7 +59,7 @@ def front_x(words):
 
 
 def sort_last(tuples):
-    return sorted(tuples, key=[-1])
+    return sorted(tuples, key=lambda x: x[-1])
 
 
 # Simple provided test() function used in main() to print
