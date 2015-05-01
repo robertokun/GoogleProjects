@@ -42,7 +42,7 @@ def not_bad(s):
             nots = s.index('not')
             bad = s.index('bad')
             return s.replace(s[nots:(bad + 3)], 'good')
-    return
+    return s
 
 
 # F. front_back
@@ -58,22 +58,31 @@ def not_bad(s):
 
 
 def front_back(a, b):
-    if len(a) % 2 == 0:
-        front_a = a[0:len(a) / 2]
-        back_a = a[len(a) / 2:]
-    else:
-        front_a = a[0:(len(a) / 2) + 1]
-        back_a = a[(len(a) / 2) + 1:]
-    if len(b) % 2 == 0:
-        front_b = b[0:len(b) / 2]
-        back_b = b[len(b) / 2:]
-    else:
-        front_b = b[0:(len(b) / 2) + 1]
-        back_b = b[(len(b) / 2) + 1:]
-    return front_a + front_b + back_a + back_b
-        # return a[0:len(a) / 2] + b[0:(len(b)/2) + 1] + a[(len(a) / 2) + 1:] + b[(len(b) / 2) + 1:]
+    # if len(a) % 2 == 0:
+    #     front_a = a[0:len(a) / 2]
+    #     back_a = a[len(a) / 2:]
+    # else:
+    #     front_a = a[0:(len(a) / 2) + 1]
+    #     back_a = a[(len(a) / 2) + 1:]
+    # if len(b) % 2 == 0:
+    #     front_b = b[0:len(b) / 2]
+    #     back_b = b[len(b) / 2:]
+    # else:
+    #     front_b = b[0:(len(b) / 2) + 1]
+    #     back_b = b[(len(b) / 2) + 1:]
+    # return front_a + front_b + back_a + back_b
+    return a[0:(len(a) + 1) / 2] + b[0:(len(b) + 1) / 2] + a[(len(a) + 1) / 2:] + b[(len(b) + 1) / 2:]
 
 
+# G. palindrome
+# given an integer n, determine if n is a palindrome
+# for ex--> 12321 --> True
+# 1555 --> False
+
+def palindrome(n):
+    if int(str(n)[::]) == int(str(n)[::-1]):
+        return True
+    return False
 
 
 # Simple provided test() function used in main() to print
@@ -110,6 +119,13 @@ def main():
     test(front_back('abcd', 'xy'), 'abxcdy')
     test(front_back('abcde', 'xyz'), 'abcxydez')
     test(front_back('Kitten', 'Donut'), 'KitDontenut')
+
+    print
+    print 'palindrome'
+    test(palindrome(12321), True)
+    test(palindrome(1555), False)
+    test(palindrome(1221), True)
+
 
 if __name__ == '__main__':
     main()
