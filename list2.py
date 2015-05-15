@@ -15,13 +15,12 @@
 
 
 def remove_adjacent(nums):
-    new_list = nums
-    for i in range(0, len(nums), 1):
-        if nums[i] == nums[i+1]:
-            nums.remove(i+1)
-            i += 1
-    return nums
-
+    new_list = nums[:]
+    for i in range(0, len(nums)-1, 1):
+        if nums[i] == nums[i + 1]:
+            new_list.remove(nums[i + 1])
+    return new_list
+# pop is index manual while remove is find oriented
 
 # E. Given two lists sorted in increasing order, create and return a merged
 # list of all the elements in sorted order. You may modify the passed in lists.
@@ -32,13 +31,18 @@ def remove_adjacent(nums):
 
 
 def linear_merge(list1, list2):
-    # list3 = []
-    # for i in range(0, len(list1), 1):
-    #     for ex in range(0, len(list2), 1):
-    #         # if the result of the find index of alpha_list feature for i[0] is less than ex[0], append i
-    #         list3.append(i and ex)
-    list1.extend(list2)
-    return sorted(list1)
+    list3 = []
+    i = 0
+    j = 0
+    for n in range(len(list1 + list2)):
+        if j == len(list2) or i < len(list1) and list1[i] <= list2[j]:
+            list3.append(list1[i])
+            i += 1
+        else:
+            list3.append(list2[j])
+            j += 1
+    return list3
+    # return sorted(list1)
 
 # Note: the solution above is kind of cute, but unforunately list.pop(0)
 # is not constant time with the standard python list implementation, so
@@ -78,6 +82,10 @@ def main():
         ['aa', 'bb', 'cc', 'xx', 'zz'])
     test(linear_merge(['aa', 'aa'], ['aa', 'bb', 'bb']),
         ['aa', 'aa', 'aa', 'bb', 'bb'])
+    test(linear_merge([100, 200, 300], [1, 2, 3]),
+        [1, 2, 3, 100, 200, 300])
+    test(linear_merge([1, 2, 3], [100, 200, 300]),
+        [1, 2, 3, 100, 200, 300])
 
 
 if __name__ == '__main__':
