@@ -80,9 +80,7 @@ def front_back(a, b):
 # 1555 --> False
 
 def palindrome(n):
-    if int(str(n)[::]) == int(str(n)[::-1]):
-        return True
-    return False
+    return str(n) == str(n)[::-1]
 
 
 # Simple provided test() function used in main() to print
