@@ -41,15 +41,37 @@ import sys
 
 
 def print_words(filename):
-    return
+    word_count = helper(filename)
+    words = sorted(word_count.keys())
+    for word in words:
+        print word, word_count[word]
+
+
+def get_count(word_count_tuple):
+    return word_count_tuple[1]
 
 
 def print_top(filename):
+    word_count = helper(filename)
+    items = sorted(word_count.items(), key=get_count, reverse=True)
+    for item in items[:20]:
+        print item[0], item[1]
     return
 
 
-def helper():
-    return
+def helper(filename):
+    word_count = {}
+    input_file = open(filename, 'rU')
+    for line in input_file:
+        words = line.split() # find good regular expression line for clean words
+        for word in words:
+            word = word.lower()
+            if word in word_count:
+                word_count[word] = word_count[word] + 1
+            else:
+                word_count[word] = 1
+    input_file.close()
+    return word_count
 
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
@@ -65,7 +87,7 @@ def helper():
 def main():
     if len(sys.argv) != 3:
         print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+        sys.exit(1)
 
     option = sys.argv[1]
     filename = sys.argv[2]
