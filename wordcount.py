@@ -37,7 +37,7 @@ print_words() and print_top().
 
 """
 
-import sys
+import sys, re
 
 
 def print_words(filename):
@@ -59,15 +59,24 @@ def print_top(filename):
     return
 
 
+# def Find(r':\w+', text):   or r'([a-z]+|[A-Z]+)' or IGNORECASE?  to be used as a flag
+#     match = re.search(pat, text, re.IGNORECASE)
+#     or use re.findall(pat, text)
+#     if match:
+#         print match.group()
+#     else:
+#         print 'Not Found'
+#     return
+
 def helper(filename):
     word_count = {}
     input_file = open(filename, 'rU')
     for line in input_file:
-        words = line.split() # find good regular expression line for clean words
+        words = line.split()
         for word in words:
-            word = word.lower()
+            word = re.sub('[,;\'\-\".?:)!]', '', word.lower())
             if word in word_count:
-                word_count[word] = word_count[word] + 1
+                word_count[word] += 1
             else:
                 word_count[word] = 1
     input_file.close()
