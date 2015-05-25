@@ -41,31 +41,58 @@ columns, so the output looks better.
 
 """
 
-import random
-import sys
+import re, sys, random
+
+
+def helper(filename):
+    word_list = []
+    input_file = open(filename, 'rU')
+    for line in input_file:
+        words = line.split()
+        for word in words:
+            word = word.lower()
+            word = re.sub('[,;\-\".?:)!]', '', word.lower())
+            word_list.append(word)
+    input_file.close()
+    return word_list
 
 
 def mimic_dict(filename):
-  """Returns mimic dict mapping each word to list of words which follow it."""
-  # +++your code here+++
-  return
+    """Returns mimic dict mapping each word to list of words which follow it."""
+    mimic_list = helper(filename)
+    word_dict = {'': mimic_list[0]}
+    for x in range(len(mimic_list) - 1):
+        if mimic_list[x] not in word_dict:
+            word_dict[mimic_list[x]] = []
+        word_dict[mimic_list[x]].append(mimic_list[x + 1])
+    return word_dict
 
 
 def print_mimic(mimic_dict, word):
-  """Given mimic dict and start word, prints 200 random words."""
-  # +++your code here+++
-  return
-
+    """Given mimic dict and start word, prints 200 random words."""
+    mimic_string = ''
+    for n in range(200):
+        if word not in mimic_dict:
+            word = ''
+        word = random.choice(mimic_dict[word])
+        mimic_string += word + ' '
+        if len(mimic_string) > 70:
+            print mimic_string
+            mimic_string = ''
+    print mimic_string
 
 # Provided main(), calls mimic_dict() and mimic()
-def main():
-  if len(sys.argv) != 2:
-    print 'usage: ./mimic.py file-to-read'
-    sys.exit(1)
 
-  dict = mimic_dict(sys.argv[1])
-  print_mimic(dict, '')
+
+def main():
+    if len(sys.argv) != 2:
+        print 'usage: ./mimic.py file-to-read'
+        sys.exit(1)
+
+    dict = mimic_dict(sys.argv[1])
+    print_mimic(dict, '')
 
 
 if __name__ == '__main__':
-  main()
+    main()
+
