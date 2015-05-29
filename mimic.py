@@ -75,12 +75,12 @@ def print_mimic(mimic_dict, word):
         if word not in mimic_dict:
             word = ''
         word = random.choice(mimic_dict[word])
-        mimic_string += word + ' '
-        if len(mimic_string) > 70:
+        if len(word) + len(mimic_string) > 70:
             print mimic_string
             mimic_string = ''
+        mimic_string += word + ' '
     print mimic_string
-
+''' TODO: cannot figure out why mimic_string += word is ok yet mimic_string - word is not'''
 # Provided main(), calls mimic_dict() and mimic()
 
 
