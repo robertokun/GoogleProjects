@@ -80,7 +80,7 @@ def print_mimic(mimic_dict, word):
             mimic_string = ''
         mimic_string += word + ' '
     print mimic_string
-''' TODO: cannot figure out why mimic_string += word is ok yet mimic_string - word is not'''
+
 # Provided main(), calls mimic_dict() and mimic()
 
 
