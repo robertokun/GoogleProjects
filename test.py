@@ -322,26 +322,59 @@ __author__ = 'robertokun'
 #
 # if __name__ == '__main__':
 #     main()
-import re, sys
+# import re, sys, os
+#
+# word_dict = {}
+# word_list = []
+# input_file = open('alice.txt', 'rU')
+# for line in input_file:
+#     words = line.split()
+#     for word in words:
+#         word = word.lower()
+#         word = re.sub('[,;\-\".?:)!]', '', word.lower())
+#         word_list.append(word)
+#
+# input_file.close()
+#
+# print 'This is Word_Count', word_list
+# for x in range(len(word_list) - 1):
+#     if word_list[x] not in word_dict:
+#         word_dict[word_list[x]] = []
+#     word_dict[word_list[x]].append(word_list[x + 1])
+#
+# print word_list
+# print word_dict
 
-word_dict = {}
-word_list = []
-input_file = open('alice.txt', 'rU')
-for line in input_file:
-    words = line.split()
-    for word in words:
-        word = word.lower()
-        word = re.sub('[,;\-\".?:)!]', '', word.lower())
-        word_list.append(word)
+import sys, re, os, sh, commands, shutil
 
-input_file.close()
 
-print 'This is Word_Count', word_list
-for x in range(len(word_list) - 1):
-    if word_list[x] not in word_dict:
-        word_dict[word_list[x]] = []
-    word_dict[word_list[x]].append(word_list[x + 1])
+"""Copy Special exercise
+"""
 
-print word_list
-print word_dict
+# def List(dir):
+#     filenames = os.listdir(dir)
+#     for filename in filenames:
+#         path = os.path.join(dir, filename)
+#         print path
+#         print os.path.abspath(path)
 
+# shutil.copy(source, dest)
+
+def List(dir):
+    cmd = 'ls -l ' + dir
+    path = os.path.join(dir, 'test.py')
+    print os.path.abspath(path)
+    (status, output) = commands.getstatusoutput(cmd)
+    if status:
+        sys.stderr.write('there was an error:', + output)
+        sys.exit(1)
+    print output
+
+def main():
+    List(sys.argv[1])
+
+# if __name__ == '__main__':
+#     main()
+
+dir = os.path.exists('solutions')
+print dir

@@ -13,7 +13,9 @@ import sys, re, os, sh, commands
 
 def List(dir):
     filenames = os.listdir(dir)
-    print filenames
+    for filename in filenames:
+        if re.search('(__)\w+(__)', filename):
+            print os.path.abspath(dir) + '/' + filename
     return
 # Write functions and modify main() to call them
 
@@ -47,7 +49,7 @@ def main():
         print "error: must specify one or more dirs"
         sys.exit(1)
 
-  # +++your code here+++
+    List(args[0])
   # Call your functions
   
 if __name__ == "__main__":
