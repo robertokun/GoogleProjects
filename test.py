@@ -322,7 +322,7 @@ __author__ = 'robertokun'
 #
 # if __name__ == '__main__':
 #     main()
-# import re, sys, os
+# import re, sys
 #
 # word_dict = {}
 # word_list = []
@@ -344,13 +344,31 @@ __author__ = 'robertokun'
 #
 # print word_list
 # print word_dict
-
+import sys, urllib
 import sys, re, os, sh, commands, shutil
 
+def Cat(filename):
+    try:
+        f = open(filename)
+        text = f.read()
+        print '-----', filename
+        print text
+    except IOError:
+        print 'IOError: ', filename
+
+input_file.close()
 
 """Copy Special exercise
 """
+def main():
+    args = sys.argv[1:]
+    for arg in  args:
+        Cat(arg)
 
+if __name__ == '__main__':
+    main()
+
+# urllib.urlretrieve('url code here', 'what you want to call the file here')
 # def List(dir):
 #     filenames = os.listdir(dir)
 #     for filename in filenames:

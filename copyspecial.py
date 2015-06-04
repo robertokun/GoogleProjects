@@ -6,20 +6,28 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
-import sys, re, os, sh, commands
+import sys, re, os, sh, commands, shutil
 
 """Copy Special exercise
 """
 
-def List(dir):
+def get_special_paths(dir):
     filenames = os.listdir(dir)
     for filename in filenames:
         if re.search('(__)\w+(__)', filename):
             print os.path.abspath(dir) + '/' + filename
     return
 # Write functions and modify main() to call them
+def copy_to(paths, dir):
+    cmd = shutil.copy(dir(), paths)
+    (status, output) = commands.getstatusoutput(cmd)
+    if status:
+        sys.exit(1)
+    return
 
+def zip_to(paths, zippath):
 
+    return
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -49,9 +57,15 @@ def main():
         print "error: must specify one or more dirs"
         sys.exit(1)
 
-    List(args[0])
+    get_special_paths(args[0])
   # Call your functions
   
 if __name__ == "__main__":
     main()
 
+# get_special_paths(dir) -- returns a list of the absolute paths of the special files in the given directory
+# copy_to(paths, dir) given a list of paths, copies those files into the given directory
+# zip_to(paths, zippath) given a list of paths, zip those files up into the given zipfile
+''' TODO: if todir in cmd then invoke todir via copy_to(paths, dir):
+          if tozip in cmd then invoke tozip(paths, zippath):
+          '''
