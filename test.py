@@ -344,29 +344,29 @@ __author__ = 'robertokun'
 #
 # print word_list
 # print word_dict
-import sys, urllib
-import sys, re, os, sh, commands, shutil
+# import sys, urllib
+# import sys, re, os, sh, commands, shutil
 
-def Cat(filename):
-    try:
-        f = open(filename)
-        text = f.read()
-        print '-----', filename
-        print text
-    except IOError:
-        print 'IOError: ', filename
-
-input_file.close()
-
-"""Copy Special exercise
-"""
-def main():
-    args = sys.argv[1:]
-    for arg in  args:
-        Cat(arg)
-
-if __name__ == '__main__':
-    main()
+# def Cat(filename):
+#     try:
+#         f = open(filename)
+#         text = f.read()
+#         print '-----', filename
+#         print text
+#     except IOError:
+#         print 'IOError: ', filename
+#
+# input_file.close()
+#
+# """Copy Special exercise
+# """
+# def main():
+#     args = sys.argv[1:]
+#     for arg in  args:
+#         Cat(arg)
+#
+# if __name__ == '__main__':
+#     main()
 
 # urllib.urlretrieve('url code here', 'what you want to call the file here')
 # def List(dir):
@@ -378,21 +378,180 @@ if __name__ == '__main__':
 
 # shutil.copy(source, dest)
 
-def List(dir):
-    cmd = 'ls -l ' + dir
-    path = os.path.join(dir, 'test.py')
-    print os.path.abspath(path)
-    (status, output) = commands.getstatusoutput(cmd)
-    if status:
-        sys.stderr.write('there was an error:', + output)
-        sys.exit(1)
-    print output
+# def List(dir):
+#     cmd = 'ls -l ' + dir
+#     path = os.path.join(dir, 'test.py')
+#     print os.path.abspath(path)
+#     (status, output) = commands.getstatusoutput(cmd)
+#     if status:
+#         sys.stderr.write('there was an error:', + output)
+#         sys.exit(1)
+#     print output
+#
+# def main():
+#     List(sys.argv[1])
+#
+# # if __name__ == '__main__':
+# #     main()
+#
+# dir = os.path.exists('solutions')
+# print dir
 
-def main():
-    List(sys.argv[1])
 
-# if __name__ == '__main__':
-#     main()
+import os
+import errno
+import shutil
+import commands
+import urllib
 
-dir = os.path.exists('solutions')
-print dir
+# path = '..'
+# # .     = current directory
+# # ..    = up one or parent of current
+# # /     = root directory (highest possible directory)
+# # ~     = home directory (home directory of current User
+# cmd = 'ls -l'
+# def make_sure_path_exists(path):
+#     we_are_here = os.getcwd()
+#     you_are_here = os.path.abspath(path)
+#     print 'We are here:', we_are_here
+#     print 'You are here:', you_are_here
+#     print "This is the listdir: ", os.listdir(path)
+#     try:
+#         if os.path.exists(path):
+#             print 'Path exists', os.path.dirname(path)
+#         else:
+#             print 'Path does NOT exist, please hit return if you want me to create it for you'
+#
+#         # os.makedirs(path)
+#     except OSError as exception:
+#         if exception.errno != errno.EEXIST:
+#             raise
+#     return path
+# make_sure_path_exists(path)
+# print commands.getstatusoutput(cmd)
+#
+# uf = urllib.urlopen('http://www.google.com')
+# uf.read()
+# print uf
+#
+# uh = urllib.urlretrieve('http://google.com/intl/en_ALL/images/logo.gif', 'blah.gif')
+
+
+
+'''TODO:    DONE-->go over paths on pc<--DONE
+            DONE-->go over paths on python<--DONE
+            3. fix paths on pycharm/GIT and trash
+            4. go over regex
+            5. website fix admin name and review bottom menu access?
+            6. remind David to prepare dicts/list/sets study homework plans
+            DONE-->remind David to prepare automated testing plans for study TDD (Test Driven Development) Red Green Refactor<--DONE
+            8. ask about raise try command. and command
+            9. not clear on "None" issue in tests, discuss
+            10. Discuss app idea?
+            '''
+
+
+# def assure_path_exists(path):
+#         dir = os.path.dirname(path)
+#         if not os.path.exists(dir):
+#                 os.makedirs(dir)
+#
+
+
+# def check_for_directory(dir_name, path, recursive=False):
+#     if os.path.isdir(path):
+#         if dir_name in os.listdir(path):
+#             return path
+#         if recursive:
+#             for directory in os.listdir(path):
+#                 new_path = path + '/' + directory
+#                 result = check_for_directory(dir_name, new_path, recursive)
+#                 if result:
+#                     return result
+        # os.makedirs(dir_name)
+        # print 'Directory %s did not exist, but does now' % dir_name
+    # return None
+
+
+class Colors:
+    HEADER  = '\033[95m'
+    INFO    = '\033[94m'
+    SUCCESS = '\033[92m'
+    WARNING = '\033[93m'
+    ERROR   = '\033[91m'
+    OTHER   = '\033[96m'
+    ENDC    = '\033[0m'
+
+def test(got, expected):
+    if got == expected:
+        prefix = Colors.SUCCESS + ' OK   ' + Colors.ENDC
+    else:
+        prefix = Colors.ERROR + ' Fail ' + Colors.ENDC
+    print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
+
+
+# test(check_for_directory('foo', '/foo/tmp'), None)
+# test(check_for_directory('GoogleProjects', '/Users/robertokun/robpython/GoogleProjects'), '/Users/robertokun/robpython/GoogleProjects')
+# test(check_for_directory('GoogleProjects', '/Users/robertokun', True), '/Users/robertokun/robpython')
+# test(check_for_directory('GoogleProjects', '/Users/robertokun', False), None)
+# test(check_for_directory('ourtester', '/Users/robertokun/robpython', True), '/Users/robertokun/robpython/ATM/output')
+
+
+# def factorial(n):
+#     if n > 1:
+#         return n * factorial(n - 1)
+#     return n
+
+# test(factorial(1), 1)
+# test(factorial(5), 120)
+
+
+
+# def fibonacci(n):
+#     if n <= 1:
+#         return n
+#     return fibonacci(n - 1) + fibonacci(n - 2)
+#
+# test(fibonacci(0), 0)
+# test(fibonacci(1), 1)
+# test(fibonacci(5), 5)
+# test(fibonacci(8), 21)
+
+
+# Plan for coin problem:
+# I want to build a dict 'coins' with {25: 1, 10: 2, 5: 0, 1: 2}
+# then have a loop to sum the products of keys and respective values.
+# when this sum of products matches desired outcome, list out sorted coins and values for values greater than 0
+# if value greater than 0, return keys reverse sorted....
+
+def make_change(n, coins):
+    answer = {}
+    for coin in coins:
+        num_per_coin = n / coin
+        answer[coin] = num_per_coin
+        n = n - (num_per_coin * coin)
+        if n == 0:
+            answer[coin] = num_per_coin
+            num_of_coins = []
+            for unit, number in answer.iteritems():
+                num_of_coins.extend([unit] * number)
+            return num_of_coins
+
+
+
+
+# make_change(37, [25, 10, 5, 1]) -->[25, 10, 1, 1]
+test(make_change(1, [25, 10, 5, 1]), [1])
+
+test(make_change(200, [25, 10, 5, 1]), [25, 25, 25, 25, 25, 25, 25, 25])
+
+test(make_change(37, [25, 10, 5, 1]), [25, 10, 1, 1])
+test(make_change(6, [25, 10, 5, 1]), [5, 1])
+test(make_change(52, [25, 10, 5, 1]), [25, 25, 1, 1])
+
+test(make_change(0, [25, 10, 5, 1]), [])
+
+
+
+
+
