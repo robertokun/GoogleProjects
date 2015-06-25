@@ -403,6 +403,8 @@ import errno
 import shutil
 import commands
 import urllib
+# import requests
+# import requests_cache
 
 # path = '..'
 # # .     = current directory
@@ -438,17 +440,6 @@ import urllib
 
 
 
-'''TODO:    DONE-->go over paths on pc<--DONE
-            DONE-->go over paths on python<--DONE
-            3. fix paths on pycharm/GIT and trash
-            4. go over regex
-            5. website fix admin name and review bottom menu access?
-            6. remind David to prepare dicts/list/sets study homework plans
-            DONE-->remind David to prepare automated testing plans for study TDD (Test Driven Development) Red Green Refactor<--DONE
-            8. ask about raise try command. and command
-            9. not clear on "None" issue in tests, discuss
-            10. Discuss app idea?
-            '''
 
 
 # def assure_path_exists(path):
@@ -516,6 +507,9 @@ def test(got, expected):
 # test(fibonacci(1), 1)
 # test(fibonacci(5), 5)
 # test(fibonacci(8), 21)
+#
+# test(fibonacci(50), 21)
+
 
 
 # Plan for coin problem:
@@ -524,32 +518,119 @@ def test(got, expected):
 # when this sum of products matches desired outcome, list out sorted coins and values for values greater than 0
 # if value greater than 0, return keys reverse sorted....
 
-def make_change(n, coins):
-    answer = {}
-    for coin in coins:
-        num_per_coin = n / coin
-        answer[coin] = num_per_coin
-        n = n - (num_per_coin * coin)
-        if n == 0:
-            answer[coin] = num_per_coin
-            num_of_coins = []
-            for unit, number in answer.iteritems():
-                num_of_coins.extend([unit] * number)
-            return num_of_coins
+# def make_change(n, coins):
+#     answer = {}
+#     for coin in coins:
+#         num_per_coin = n / coin
+#         answer[coin] = num_per_coin
+#         n = n - (num_per_coin * coin)
+#     if n == 0:
+#         answer[coin] = num_per_coin
+#         num_of_coins = []
+#         for unit, number in answer.iteritems():
+#             num_of_coins.extend([unit] * number)
+#         return num_of_coins
+#
+# # make_change(37, [25, 10, 5, 1]) -->[25, 10, 1, 1]
+# test(make_change(1, [25, 10, 5, 1]), [1])
+#
+# test(make_change(200, [25, 10, 5, 1]), [25, 25, 25, 25, 25, 25, 25, 25])
+#
+# test(make_change(37, [25, 10, 5, 1]), [25, 10, 1, 1])
+# test(make_change(6, [25, 10, 5, 1]), [5, 1])
+# test(make_change(52, [25, 10, 5, 1]), [25, 25, 1, 1])
+#
+# test(make_change(0, [25, 10, 5, 1]), [])
+#
+# test(make_change(30, [25, 10, 1]), [10, 10, 10])
+#
+#
+# def making_changes(n, coins):
+#     solution = []
+#     for coin in coins:
+#         solution.extend([coin] * (n / coin))
+#         n %= coin
+#     if n == 0:
+#         return solution
+#     return None
+#
+# test(making_changes(1, [25, 10, 5, 1]), [1])
+# test(making_changes(200, [25, 10, 5, 1]), [25, 25, 25, 25, 25, 25, 25, 25])
+# test(making_changes(0, [25, 10, 5, 1]), [])
+# test(making_changes(100, []), None)
+# test(making_changes(37, [25, 5]), None)
+# test(making_changes(37, [25, 10, 5, 1]), [25, 10, 1, 1])
+# test(making_changes(6, [25, 10, 5, 1]), [5, 1])
+# test(making_changes(52, [25, 10, 5, 1]), [25, 25, 1, 1])
+# test(making_changes(30, [25, 10, 1]), [10, 10, 10])
 
 
 
+def make_change(coin_value_list, change, min_coins, coins_used):
+    for cents in range(change + 1):
+        print 'Cents =', cents # my assist
+        print 'Range for change + 1 =', change + 1 # my assist
+        coin_count = cents
+        new_coin = 1
+        for j in [c for c in coin_value_list if c <= cents]:
+            print 'This is J:', j # my assist
+            if min_coins[cents-j] + 1 < coin_count:
+                coin_count = min_coins[cents-j] + 1
+                new_coin = j
+        min_coins[cents] = coin_count
+        coins_used[cents] = new_coin
+    return min_coins[change]
 
-# make_change(37, [25, 10, 5, 1]) -->[25, 10, 1, 1]
-test(make_change(1, [25, 10, 5, 1]), [1])
+def print_coins(coins_used, change):
+    coin = change
+    while coin > 0:
+        this_coin = coins_used[coin]
+        print(this_coin)
+        coin = coin - this_coin
 
-test(make_change(200, [25, 10, 5, 1]), [25, 25, 25, 25, 25, 25, 25, 25])
+def main():
+    amount = 63
+    coin_list = [1, 5, 10, 25]
+    coins_used = [0]*(amount+1)
+    coin_count = [0]*(amount+1)
 
-test(make_change(37, [25, 10, 5, 1]), [25, 10, 1, 1])
-test(make_change(6, [25, 10, 5, 1]), [5, 1])
-test(make_change(52, [25, 10, 5, 1]), [25, 25, 1, 1])
+    print("Making change for", amount, "requires")
+    print(make_change(coin_list, amount, coin_count, coins_used), "coins")
+    print("They are:")
+    print_coins(coins_used, amount)
+    print("The used list is as follows:")
+    print(coins_used)
 
-test(make_change(0, [25, 10, 5, 1]), [])
+main()
+
+
+# TODO: add caching to fib & lookup dynamic programing
+'''TODO:    DONE-->go over paths on pc<--DONE
+            DONE-->go over paths on python<--DONE
+            DONE-->fix paths on pycharm/GIT and trash<--DONE
+            4. go over regex
+            5. website fix admin name and review bottom menu access?
+            6. remind David to prepare dicts/list/sets study homework plans
+            DONE-->remind David to prepare automated testing plans for study TDD (Test Driven Development) Red Green Refactor<--DONE
+            8. ask about raise try command. and command
+            DONE-->not clear on "None" issue in tests, discuss<--DONE
+            10. coin_value_list is an argument of a function...how must it be used or not?
+            11. this solution uses lists in a wonderful way. How can I learn these better?
+            '''
+
+# Given a string, compute recursively (no loops) the number of lowercase 'x' chars in the string.
+#
+'''# countX("xxhixx")  4
+# countX("xhixhix")  3
+# countX("hi")  0
+'''
+
+xlist = 'hixxhixxxxhixxxxhixx'
+xlist.split()
+new_xlist = [i for i in xlist if i == 'x']
+print "The number of x's in the list is: ", len(new_xlist)
+
+
 
 
 
