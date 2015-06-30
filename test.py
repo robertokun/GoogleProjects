@@ -403,8 +403,10 @@ import errno
 import shutil
 import commands
 import urllib
-# import requests
-# import requests_cache
+import requests
+import requests_cache
+import functools
+
 
 # path = '..'
 # # .     = current directory
@@ -509,6 +511,23 @@ def test(got, expected):
 # test(fibonacci(8), 21)
 #
 # test(fibonacci(50), 21)
+@lru_cache(maxsize=None) # (LRU = Last Recently Used)
+def fib(n):
+    if n < 2:
+        return n
+    return fib(n-1) + fib(n-2)
+
+# >>> [fib(n) for n in range(16)]
+# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+#
+# >>> fib.cache_info()
+# CacheInfo(hits=28, misses=16, maxsize=None, currsize=16)
+
+
+
+
+
+
 
 
 
@@ -589,7 +608,7 @@ def print_coins(coins_used, change):
         coin = coin - this_coin
 
 def main():
-    amount = 63
+    amount = 1
     coin_list = [1, 5, 10, 25]
     coins_used = [0]*(amount+1)
     coin_count = [0]*(amount+1)
@@ -604,7 +623,7 @@ def main():
 main()
 
 
-# TODO: add caching to fib & lookup dynamic programing
+# TODO: add caching to fib & lookup dynamic programing<--DONE
 '''TODO:    DONE-->go over paths on pc<--DONE
             DONE-->go over paths on python<--DONE
             DONE-->fix paths on pycharm/GIT and trash<--DONE
@@ -629,7 +648,7 @@ xlist = 'hixxhixxxxhixxxxhixx'
 xlist.split()
 new_xlist = [i for i in xlist if i == 'x']
 print "The number of x's in the list is: ", len(new_xlist)
-
+print xlist.split(",")
 
 
 
