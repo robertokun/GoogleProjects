@@ -403,8 +403,8 @@ import errno
 import shutil
 import commands
 import urllib
-import requests
-import requests_cache
+# import requests
+# import requests_cache
 import functools
 
 
@@ -511,12 +511,12 @@ def test(got, expected):
 # test(fibonacci(8), 21)
 #
 # test(fibonacci(50), 21)
-@lru_cache(maxsize=None) # (LRU = Last Recently Used)
-def fib(n):
-    if n < 2:
-        return n
-    return fib(n-1) + fib(n-2)
-
+# @lru_cache(maxsize=None) # (LRU = Last Recently Used)
+# def fib(n):
+#     if n < 2:
+#         return n
+#     return fib(n-1) + fib(n-2)
+#
 # >>> [fib(n) for n in range(16)]
 # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
 #
@@ -585,42 +585,42 @@ def fib(n):
 
 
 
-def make_change(coin_value_list, change, min_coins, coins_used):
-    for cents in range(change + 1):
-        print 'Cents =', cents # my assist
-        print 'Range for change + 1 =', change + 1 # my assist
-        coin_count = cents
-        new_coin = 1
-        for j in [c for c in coin_value_list if c <= cents]:
-            print 'This is J:', j # my assist
-            if min_coins[cents-j] + 1 < coin_count:
-                coin_count = min_coins[cents-j] + 1
-                new_coin = j
-        min_coins[cents] = coin_count
-        coins_used[cents] = new_coin
-    return min_coins[change]
-
-def print_coins(coins_used, change):
-    coin = change
-    while coin > 0:
-        this_coin = coins_used[coin]
-        print(this_coin)
-        coin = coin - this_coin
-
-def main():
-    amount = 1
-    coin_list = [1, 5, 10, 25]
-    coins_used = [0]*(amount+1)
-    coin_count = [0]*(amount+1)
-
-    print("Making change for", amount, "requires")
-    print(make_change(coin_list, amount, coin_count, coins_used), "coins")
-    print("They are:")
-    print_coins(coins_used, amount)
-    print("The used list is as follows:")
-    print(coins_used)
-
-main()
+# def make_change(coin_value_list, change, min_coins, coins_used):
+#     for cents in range(change + 1):
+#         print 'Cents =', cents # my assist
+#         print 'Range for change + 1 =', change + 1 # my assist
+#         coin_count = cents
+#         new_coin = 1
+#         for j in [c for c in coin_value_list if c <= cents]:
+#             print 'This is J:', j # my assist
+#             if min_coins[cents-j] + 1 < coin_count:
+#                 coin_count = min_coins[cents-j] + 1
+#                 new_coin = j
+#         min_coins[cents] = coin_count
+#         coins_used[cents] = new_coin
+#     return min_coins[change]
+#
+# def print_coins(coins_used, change):
+#     coin = change
+#     while coin > 0:
+#         this_coin = coins_used[coin]
+#         print(this_coin)
+#         coin = coin - this_coin
+#
+# def main():
+#     amount = 1
+#     coin_list = [1, 5, 10, 25]
+#     coins_used = [0]*(amount+1)
+#     coin_count = [0]*(amount+1)
+#
+#     print("Making change for", amount, "requires")
+#     print(make_change(coin_list, amount, coin_count, coins_used), "coins")
+#     print("They are:")
+#     print_coins(coins_used, amount)
+#     print("The used list is as follows:")
+#     print(coins_used)
+#
+# main()
 
 
 # TODO: add caching to fib & lookup dynamic programing<--DONE
@@ -644,14 +644,83 @@ main()
 # countX("hi")  0
 '''
 
-xlist = 'hixxhixxxxhixxxxhixx'
-xlist.split()
-new_xlist = [i for i in xlist if i == 'x']
-print "The number of x's in the list is: ", len(new_xlist)
-print xlist.split(",")
+# xlist = 'abcxx'
+# new_xlist = [i for i in xlist if i == 'x']
+# print "The number of x's in the list is: ", len(new_xlist)
+
+
+'''DONE-->TODO: how do I split everything in ['xxxdsx'] to ['x','x','x',etc.....<--DONE'''
+
+# list5 = list(xlist)
+# print list5
+#
+# def countx(my_list):
+#     if len(my_list) == 0:
+#         return 0
+#     if my_list[0] == 'x':
+#         return 1 + countx(my_list[1:])
+#     return 0 + countx(my_list[1:])
+#
+# def foo():
+#     return 5 + len('uowegfbub')
+#
+# print 'This is how many lower case x\'s there are:', countx(xlist)
+# print 'This is how many lower case x\'s there are:', countx('jhgfdxxxxtuxx')
+#
+# test(countx('xxosidufodkjnfs'), 2)
+# test(countx(''), 0)
+# test(countx('x'), 1)
+# test(countx('abc'), 0)
+#
+# def sum_even(mylist):
+#     if len(mylist) == 0:
+#         return 0
+#     if (mylist[0]) % 2 == 0:
+#         return mylist[0] + sum_even(mylist[1:])
+#     return sum_even(mylist[1:])
+#
+# test(sum_even([]), 0)
+# test(sum_even([0, 1]), 0)
+# test(sum_even([0, 1, 2]), 2)
+
+# F(0) = F(1) = 1
+# F(n) = 2F(n-1) * F(n-2)
+# F(5) = ?  F(5) = F(4) * F(3)
+#           F(4) = F(3) * F(2)
+#           F(3) = F(2) * F(1)
+#           F(2) = F(1) * F(0) = 1 * 1 = 1
+
+
+mem = {}
+def func_n(n):
+    if 0 <= n <= 1:
+        return 1
+    return 2 * func_n(n-1) * func_n(n-2)
+
+test(func_n(1), 1)
+test(func_n(0), 1)
+test(func_n(2), 2)
+test(func_n(3), 4)
+test(func_n(4), 16)
+test(func_n(5), 128)
+
+
+def func_nmem(n):
+    if 0 <= n <= 1:
+        if n not in mem:
+            mem[n] = n
+            return mem[n]
+        new_value = (2 * func_nmem(n-1) * func_nmem(n-2))
+        mem[n] = new_value
+    return 2 * func_n(n-1) * func_n(n-2)
+print 'This is mem:', mem
 
 
 
 
-
-
+test(func_nmem(1), 1)
+test(func_nmem(0), 1)
+test(func_nmem(2), 2)
+# test(func_nmem(3), 4)
+# test(func_nmem(4), 16)
+# test(func_nmem(5), 128)
