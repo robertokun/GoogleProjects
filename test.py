@@ -1,3 +1,5 @@
+import time
+
 __author__ = 'robertokun'
 
 # def foo(num1, num2):
@@ -482,6 +484,10 @@ def test(got, expected):
         prefix = Colors.ERROR + ' Fail ' + Colors.ENDC
     print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
 
+def test_with_memoization(got, expected, mem):
+    test(got, expected)
+    mem.clear()
+
 
 # test(check_for_directory('foo', '/foo/tmp'), None)
 # test(check_for_directory('GoogleProjects', '/Users/robertokun/robpython/GoogleProjects'), '/Users/robertokun/robpython/GoogleProjects')
@@ -690,8 +696,6 @@ def test(got, expected):
 #           F(3) = F(2) * F(1)
 #           F(2) = F(1) * F(0) = 1 * 1 = 1
 
-
-
 def func_n(n):
     if 0 <= n <= 1:
         return 1
@@ -707,19 +711,15 @@ test(func_n(5), 128)
 mem = {}
 def func_nmem(n):
     if 0 <= n <= 1:
-        if n not in mem:
-            mem[n] = 1
-            print 'n & mem =', n, mem
-            return mem[n]
-        new_value = (2 * func_nmem(n-1) * func_nmem(n-2))
-        mem[n] = new_value
-        print 'This is mem:', mem
-    return 2 * func_n(n-1) * func_n(n-2)
+        return 1
+    if n in mem:
+        return mem[n]
+    new_value = 2 * func_nmem(n-1) * func_nmem(n-2)
+    mem[n] = new_value
+    return new_value
 print 'This is mem:', mem
 
-
-
-
+start_time = time.time()
 test(func_nmem(0), 1)
 test(func_nmem(1), 1)
 test(func_nmem(2), 2)
@@ -728,3 +728,49 @@ test(func_nmem(4), 16)
 test(func_nmem(5), 128)
 test(func_nmem(6), 4096)
 test(func_nmem(7), 1048576)
+test(func_nmem(19), 8589934592)
+test(func_nmem(29), 18014398509481984)
+end_time = time.time()
+print "Run Time = ", end_time - start_time
+
+memory = {}
+def func_memory(n):
+    if 0 <= n <= 1:
+        return 1
+    if n in memory:
+        return memory[n]
+    new_value = 2 * func_memory(n-1) * func_memory(n-2)
+    memory[n] = new_value
+    return new_value
+print 'This is mem:', memory
+
+start_time = time.time()
+test_with_memoization(func_memory(0), 1, memory)
+test_with_memoization(func_memory(1), 1, memory)
+test_with_memoization(func_memory(2), 2, memory)
+test_with_memoization(func_memory(3), 4, memory)
+test_with_memoization(func_memory(4), 16, memory)
+test_with_memoization(func_memory(5), 128, memory)
+test_with_memoization(func_memory(6), 4096, memory)
+test_with_memoization(func_memory(7), 1048576, memory)
+test_with_memoization(func_memory(19), 8589934592, memory)
+test_with_memoization(func_memory(29), 18014398509481984, memory)
+end_time = time.time()
+print "Run Time = ", end_time - start_time
+start_time = time.time()
+test_with_memoization(func_memory(0), 1, memory)
+mem.clear()
+test_with_memoization(func_memory(1), 1, memory)
+test_with_memoization(func_memory(2), 2, memory)
+test_with_memoization(func_memory(3), 4, memory)
+test_with_memoization(func_memory(4), 16, memory)
+test_with_memoization(func_memory(5), 128, memory)
+test_with_memoization(func_memory(6), 4096, memory)
+test_with_memoization(func_memory(7), 1048576, memory)
+test_with_memoization(func_memory(19), 8589934592, memory)
+test_with_memoization(func_memory(29), 18014398509481984, memory)
+end_time = time.time()
+print "Run Time = ", end_time - start_time
+
+# always clear memory when testing functionality but we want to keep memory for our work to improve speeds
+
