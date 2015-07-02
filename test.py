@@ -691,36 +691,40 @@ def test(got, expected):
 #           F(2) = F(1) * F(0) = 1 * 1 = 1
 
 
-mem = {}
+
 def func_n(n):
     if 0 <= n <= 1:
         return 1
     return 2 * func_n(n-1) * func_n(n-2)
 
-test(func_n(1), 1)
 test(func_n(0), 1)
+test(func_n(1), 1)
 test(func_n(2), 2)
 test(func_n(3), 4)
 test(func_n(4), 16)
 test(func_n(5), 128)
 
-
+mem = {}
 def func_nmem(n):
     if 0 <= n <= 1:
         if n not in mem:
-            mem[n] = n
+            mem[n] = 1
+            print 'n & mem =', n, mem
             return mem[n]
         new_value = (2 * func_nmem(n-1) * func_nmem(n-2))
         mem[n] = new_value
+        print 'This is mem:', mem
     return 2 * func_n(n-1) * func_n(n-2)
 print 'This is mem:', mem
 
 
 
 
-test(func_nmem(1), 1)
 test(func_nmem(0), 1)
+test(func_nmem(1), 1)
 test(func_nmem(2), 2)
-# test(func_nmem(3), 4)
-# test(func_nmem(4), 16)
-# test(func_nmem(5), 128)
+test(func_nmem(3), 4)
+test(func_nmem(4), 16)
+test(func_nmem(5), 128)
+test(func_nmem(6), 4096)
+test(func_nmem(7), 1048576)
