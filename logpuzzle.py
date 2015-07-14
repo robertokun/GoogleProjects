@@ -6,10 +6,7 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
-import os
-import re
-import sys
-import urllib
+import commands, re, os, shutil
 
 """Logpuzzle exercise
 Given an apache logfile, find the puzzle urls and download the images.
