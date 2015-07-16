@@ -6,7 +6,7 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
-import commands, re, os, shutil
+import commands, re, os, shutil, urllib
 
 """Logpuzzle exercise
 Given an apache logfile, find the puzzle urls and download the images.
@@ -21,7 +21,10 @@ def read_urls(filename):
   extracting the hostname from the filename itself.
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
-  # +++your code here+++
+
+
+
+
   
 
 def download_images(img_urls, dest_dir):
@@ -36,23 +39,23 @@ def download_images(img_urls, dest_dir):
   
 
 def main():
-  args = sys.argv[1:]
+    args = sys.argv[1:]
 
-  if not args:
-    print 'usage: [--todir dir] logfile '
-    sys.exit(1)
+    if not args:
+        print 'usage: [--todir dir] logfile '
+        sys.exit(1)
 
-  todir = ''
-  if args[0] == '--todir':
-    todir = args[1]
-    del args[0:2]
+    todir = ''
+    if args[0] == '--todir':
+        todir = args[1]
+        del args[0:2]
 
-  img_urls = read_urls(args[0])
+    img_urls = read_urls(args[0])
 
-  if todir:
-    download_images(img_urls, todir)
-  else:
-    print '\n'.join(img_urls)
+    if todir:
+        download_images(img_urls, todir)
+    else:
+        print '\n'.join(img_urls)
 
 if __name__ == '__main__':
   main()
