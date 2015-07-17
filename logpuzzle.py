@@ -7,6 +7,7 @@
 # http://code.google.com/edu/languages/google-python-class/
 
 import commands, re, os, shutil, urllib
+import sys
 
 """Logpuzzle exercise
 Given an apache logfile, find the puzzle urls and download the images.
@@ -14,32 +15,37 @@ Given an apache logfile, find the puzzle urls and download the images.
 Here's what a puzzle url looks like:
 10.254.254.28 - - [06/Aug/2007:00:13:48 -0700] "GET /~foo/puzzle-bar-aaab.jpg HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
-pattern = r'(regex formula here)'
+# re.search(), vs re.match(), vs re.findall()
+# .groups (0-3) = 0 = ?, 1 = ?, 2 = ?, 3 = ?
+pattern = r'(GET )(\S.*puzzle.*\.jpg)'
 test_strings = 'apache logfile'
+filename = 'animal_code.google.com'
 
 def read_urls(filename):
-  """Returns a list of the puzzle urls from the given log file,
-  extracting the hostname from the filename itself.
-  Screens out duplicate urls and returns the urls sorted into
-  increasing order."""
+    """Returns a list of the puzzle urls from the given log file,
+    extracting the hostname from the filename itself.
+    Screens out duplicate urls and returns the urls sorted into
+    increasing order."""
+    url_list = open(filename, 'rU')
+    test_strings = url_list.read()
     for my_string in test_strings:
         match_url = re.search(pattern, my_string)
         if match_url:
-            print
+            print filename
 
 
   
 
 def download_images(img_urls, dest_dir):
-  """Given the urls already in the correct order, downloads
-  each image into the given directory.
-  Gives the images local filenames img0, img1, and so on.
-  Creates an index.html in the directory
-  with an img tag to show each local image file.
-  Creates the directory if necessary.
-  """
-  # +++your code here+++
-  
+    """Given the urls already in the correct order, downloads
+    each image into the given directory.
+    Gives the images local filenames img0, img1, and so on.
+    Creates an index.html in the directory
+    with an img tag to show each local image file.
+    Creates the directory if necessary.
+    """
+    # +++your code here+++
+
 
 def main():
     args = sys.argv[1:]
@@ -61,4 +67,4 @@ def main():
         print '\n'.join(img_urls)
 
 if __name__ == '__main__':
-  main()
+    main()
