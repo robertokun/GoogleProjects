@@ -633,9 +633,9 @@ def test_with_memoization(got, expected, mem):
 '''TODO:    DONE-->go over paths on pc<--DONE
             DONE-->go over paths on python<--DONE
             DONE-->fix paths on pycharm/GIT and trash<--DONE
-            4. go over regex
+            DONE-->go over regex<--DONE
             DONE-->website fix admin name and review bottom menu access?<--DONE
-            6. remind David to prepare dicts/list/sets study homework plans
+            DONE-->remind David to prepare dicts/list/sets study homework plans<--DONE
             DONE-->prepare automated testing plans for study TDD (Test Driven Development) Red Green Refactor<--DONE
             DONE-->ask about raise try command. and command<--DONE
             DONE-->not clear on "None" issue in tests, discuss<--DONE

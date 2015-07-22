@@ -18,21 +18,26 @@ Here's what a puzzle url looks like:
 # re.search(), vs re.match(), vs re.findall()
 # .groups (0-3) = 0 = ?, 1 = ?, 2 = ?, 3 = ?
 pattern = r'(GET )(\S.*puzzle.*\.jpg)'
-test_strings = 'apache logfile'
-filename = 'animal_code.google.com'
+# filename = 'animal_code.google.com'
+prefix = 'http://code.google.com'
 
 def read_urls(filename):
     """Returns a list of the puzzle urls from the given log file,
     extracting the hostname from the filename itself.
     Screens out duplicate urls and returns the urls sorted into
     increasing order."""
-    url_list = open(filename, 'rU')
-    test_strings = url_list.read()
-    for my_string in test_strings:
-        match_url = re.search(pattern, my_string)
-        if match_url:
-            print filename
-
+    if not os.path.isfile(filename):
+        return []
+    with open(filename, 'rU') as log_file:
+        image_list = []
+        logfile_lines = log_file.readlines()
+        for line in logfile_lines:
+            match_obj = re.search(pattern, line)
+            if match_obj:
+                if (prefix + match_obj.group(2)) not in image_list:
+                    image_list.append(prefix + match_obj.group(2))
+        sorted_image_list = sorted(image_list)
+        return sorted_image_list
 
   
 
