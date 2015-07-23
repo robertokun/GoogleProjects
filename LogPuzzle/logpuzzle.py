@@ -38,8 +38,7 @@ def read_urls(filename):
                     image_list.append(prefix + match_obj.group(2))
         sorted_image_list = sorted(image_list)
         return sorted_image_list
-'''TODO: I beleive most of this is working but I cannot remove duplicates for some reason?)'''
-  
+
 
 def download_images(img_urls, dest_dir):
     """Given the urls already in the correct order, downloads
