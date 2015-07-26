@@ -32,9 +32,10 @@ Here's what a puzzle url looks like:
 # re.search(), vs re.match(), vs re.findall()
 # .groups (0-3) = 0 = ?, 1 = ?, 2 = ?, 3 = ?
 pattern = r'(GET )(\S.*puzzle.*\.jpg)'
-# filename = 'animal_code.google.com'
-prefix = 'http://code.google.com'
-
+# # filename = 'animal_code.google.com'
+prefix_pattern = r'(_)(\S+\.\w+)'
+# prefix = 'http://code.google.com'
+#
 def read_urls(filename):
     """Returns a list of the puzzle urls from the given log file,
     extracting the hostname from the filename itself.
@@ -43,6 +44,7 @@ def read_urls(filename):
     if not os.path.isfile(filename):
         return []
     with open(filename, 'rU') as log_file:
+        prefix = 'http://' + re.search(prefix_pattern, filename).group(2)
         image_list = []
         logfile_lines = log_file.readlines()
         for line in logfile_lines:
@@ -53,20 +55,25 @@ def read_urls(filename):
         sorted_image_list = sorted(image_list)
         return sorted_image_list
 
-# def download_images(img_urls, dest_dir):
-#     """Given the urls already in the correct order, downloads
-#     each image into the given directory.
-#     Gives the images local filenames img0, img1, and so on.
-#     Creates an index.html in the directory
-#     with an img tag to show each local image file.
-#     Creates the directory if necessary.
-#     """
-#     uf = urllib.urlretrieve()
+def download_images(img_urls, dest_dir):
+    """Given the urls already in the correct order,
+    downloads each image into the given directory.
+    Gives the images local filenames img0, img1, and so on.
 
-
+    Creates an index.html in the directory
+    with an img tag to show each local image file.
+    Creates the directory if necessary.
+    """
+    counter = 0
+    for url in img_urls:
+        urllib.urlretrieve(url, dest_dir + '/img' + str(counter) + '.jpg')
+        counter += 1
+    with open(dest_dir + '/index.html', 'w') as log_puzzle_file:
+        for i in range(len(img_urls)):
+            log_puzzle_file.write('<img src="img' + str(i) + '.jpg" />')
 
 test(read_urls('doesnotexist'), [])
-test(read_urls('emptyfile'), [])
+test(read_urls('emptyfile_code.google.com'), [])
 # test(read_urls('test_code.google.com'), ['10.254.254.28 - - [06/Aug/2007:00:12:20 -0700] "GET /keyser/22300/ HTTP/1.0" 302 528 "-" "Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1.4) Gecko/20070515 Firefox/2.0.0.4"\n',
 # '10.254.254.58 - - [06/Aug/2007:00:10:05 -0700] "GET /edu/languages/google-python-class/images/puzzle/a-baaa.jpg HTTP/1.0" 200 2309 "-" "googlebot-mscrawl-moma (enterprise; bar-XYZ; foo123@google.com,foo123@google.com,foo123@google.com,foo123@google.com)"\n',
 # '10.254.254.28 - - [06/Aug/2007:00:11:08 -0700] "GET /favicon.ico HTTP/1.0" 302 3404 "-" "googlebot-mscrawl-moma (enterprise; bar-XYZ; foo123@google.com,foo123@google.com,foo123@google.com,foo123@google.com)"\n',
@@ -74,3 +81,9 @@ test(read_urls('emptyfile'), [])
 # ])
 test(read_urls('test_code.google.com'), ['http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaa.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baag.jpg'])
 test(read_urls('animal_code.google.com'), ['http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaa.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baab.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baac.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baad.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baae.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaf.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baag.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baah.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baai.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaj.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baba.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babb.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babc.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babd.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babe.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babf.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babg.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babh.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babi.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babj.jpg'])
+print '\n' * 2, "Testing start for download_images"
+# test(read_urls('doesnotexist'), [])
+# test(read_urls('emptyfile_code.google.com'), [])
+download_images(['http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaa.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baab.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baac.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baad.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baae.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaf.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baag.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baah.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baai.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baaj.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-baba.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babb.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babc.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babd.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babe.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babf.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babg.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babh.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babi.jpg', 'http://code.google.com/edu/languages/google-python-class/images/puzzle/a-babj.jpg'], 'test_logpuzzle')
+download_images(read_urls('place_code.google.com'), 'place_files')
+

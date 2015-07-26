@@ -19,7 +19,8 @@ Here's what a puzzle url looks like:
 # .groups (0-3) = 0 = ?, 1 = ?, 2 = ?, 3 = ?
 pattern = r'(GET )(\S.*puzzle.*\.jpg)'
 # filename = 'animal_code.google.com'
-prefix = 'http://code.google.com'
+prefix_pattern = r'(_)(\S+\.\w+)'
+# prefix = 'http://code.google.com'
 
 def read_urls(filename):
     """Returns a list of the puzzle urls from the given log file,
@@ -29,6 +30,7 @@ def read_urls(filename):
     if not os.path.isfile(filename):
         return []
     with open(filename, 'rU') as log_file:
+        prefix = 'http://' + re.search(prefix_pattern, filename).group(2)
         image_list = []
         logfile_lines = log_file.readlines()
         for line in logfile_lines:
@@ -41,14 +43,21 @@ def read_urls(filename):
 
 
 def download_images(img_urls, dest_dir):
-    """Given the urls already in the correct order, downloads
-    each image into the given directory.
+    """Given the urls already in the correct order,
+    downloads each image into the given directory.
     Gives the images local filenames img0, img1, and so on.
+
     Creates an index.html in the directory
     with an img tag to show each local image file.
     Creates the directory if necessary.
     """
-    # +++your code here+++
+    counter = 0
+    for url in img_urls:
+        urllib.urlretrieve(url, dest_dir + '/img' + str(counter) + '.jpg')
+        counter += 1
+    with open(dest_dir + '/index.html', 'w') as log_puzzle_file:
+        for i in range(len(img_urls)):
+            log_puzzle_file.write('<img src="img' + str(i) + '.jpg" />')
 
 
 def main():
