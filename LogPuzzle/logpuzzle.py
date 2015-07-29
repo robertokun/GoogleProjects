@@ -38,7 +38,7 @@ def read_urls(filename):
             if match_obj:
                 if (prefix + match_obj.group(2)) not in image_list:
                     image_list.append(prefix + match_obj.group(2))
-        sorted_image_list = sorted(image_list)
+        sorted_image_list = sorted(image_list, key=lambda url: url[-8:-4])
         return sorted_image_list
 
 
@@ -51,6 +51,9 @@ def download_images(img_urls, dest_dir):
     with an img tag to show each local image file.
     Creates the directory if necessary.
     """
+    if not os.path.exists(dest_dir):
+        os.mkdir(dest_dir)
+        return
     counter = 0
     for url in img_urls:
         urllib.urlretrieve(url, dest_dir + '/img' + str(counter) + '.jpg')

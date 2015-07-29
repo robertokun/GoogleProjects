@@ -1082,3 +1082,20 @@ print ' --> P R O C E S S   C O M P L E T E D <-- '
 # [30, 24, 33, 7, 0]
 # Likewise we could list the odd class sizes first, and perform many other algorithms to get our sort exactly how we want. There are many other intricate sorting methods and tricks you could use with dictionaries (or any iterable object), but for now hopefully these examples have provided a good starting point.
 #
+[1, 2, 3, 4]
+>>> numbers
+{'second': 2, 'Fourth': 4, 'third': 3, 'first': 1}
+>>> sorted_keys = sorted(numbers.keys())
+>>> sorted_keys
+['Fourth', 'first', 'second', 'third']
+>>> sorted_list = []
+>>> for key in sorted_keys:
+...   sorted_list.append(numbers[key])
+...
+>>> print sorted_list
+[4, 1, 2, 3]
+
+or
+
+[numbers[key] for key in sorted(numbers.keys())]
+
