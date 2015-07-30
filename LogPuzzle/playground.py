@@ -66,7 +66,6 @@ def download_images(img_urls, dest_dir):
     """
     if not os.path.exists(dest_dir):
         os.mkdir(dest_dir)
-        return
     counter = 0
     for url in img_urls:
         urllib.urlretrieve(url, dest_dir + '/img' + str(counter) + '.jpg')
