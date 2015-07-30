@@ -633,9 +633,9 @@ def test_with_memoization(got, expected, mem):
 '''TODO:    DONE-->go over paths on pc<--DONE
             DONE-->go over paths on python<--DONE
             DONE-->fix paths on pycharm/GIT and trash<--DONE
-            4. go over regex
+            DONE-->go over regex<--DONE
             DONE-->website fix admin name and review bottom menu access?<--DONE
-            6. remind David to prepare dicts/list/sets study homework plans
+            DONE-->remind David to prepare dicts/list/sets study homework plans<--DONE
             DONE-->prepare automated testing plans for study TDD (Test Driven Development) Red Green Refactor<--DONE
             DONE-->ask about raise try command. and command<--DONE
             DONE-->not clear on "None" issue in tests, discuss<--DONE
@@ -895,3 +895,207 @@ for key in sorted_keys:
     print 'The File is-->: ', key + ' = ' + str(new_file_list[key]) + ' Bytes'
     print
 print ' --> P R O C E S S   C O M P L E T E D <-- '
+
+
+
+
+# Sorting DIctionary's
+# How to Sort Python Dictionaries by Key or Value
+# Published: Wednesday 20th February 2013
+# Last Updated: Tuesday 19th March 2013
+#
+# Share on facebook Share on google_plusone_share Share on twitter Share on stumbleupon Share on print Share on email
+# Note: If you want to sort a list, tuple or object in Python, checkout this article: How to Sort a List or Tuple in Python
+#
+# The dict (dictionary) class object in Python is a very versatile and useful container type, able to store a collection of values and retrieve them via keys. The values can be objects of any type (dictionaries can even be nested with other dictionaries) and the keys can be any object so long as it's hashable, meaning basically that it is immutable (so strings are not the only valid keys, but mutable objects like lists can never be used as keys). Unlike Python lists or tuples, the key and value pairs in dict objects are not in any particular order, which means we can have a dict like this:
+#
+# 1
+# numbers = {'first': 1, 'second': 2, 'third': 3, 'Fourth': 4}
+# Although the key-value pairs are in a certain order in the instantiation statement, by calling the list method on it (which will create a list from its keys) we can easily see they aren't stored in that order:
+#
+# 1
+# 2
+# >>> list(numbers)
+# ['second', 'Fourth', 'third', 'first']
+# Sorting Python dictionaries by Keys
+# If we want to order or sort the dictionary objects by their keys, the simplest way to do so is by Python's built-in sorted method, which will take any iterable and return a list of the values which has been sorted (in ascending order by default). There is no class method for sorting dictionaries as there is for lists, however the sorted method works the same exact way. Here's what it does with our dictionary:
+#
+# 1
+# 2
+# 3
+# # This is the same as calling sorted(numbers.keys())
+# >>> sorted(numbers)
+# ['Fourth', 'first', 'second', 'third']
+# We can see this method has given us a list of the keys in ascending order, and in almost alphabetical order, depending on what we define as "alphabetical." Also notice that we sorted its list of keys by its keys — if we want to sort its list of values by its keys, or its list of keys by its values, we'd have to change the way we use the sorted method. We'll look at these different aspects of sorted in a bit.
+#
+# Sorting Python dictionaries by Values
+# In the same way as we did with the keys, we can use sorted to sort the Python dictionary by its values:
+#
+# 1
+# 2
+# 3
+# # We have to call numbers.values() here
+# >>> sorted(numbers.values())
+# [1, 2, 3, 4]
+# This is the list of values in the default order, in ascending order. These are very simple examples so let's now examine some slightly more complex situations where we are sorting our dict object.
+#
+# Custom sorting algorithms with Python dictionaries
+# If we simply give the sorted method the dictionary's keys/values as an argument it will perform a simple sort, but by utilizing its other arguments (i.e. key and reverse) we can get it to perform more complex sorts.
+#
+# The key argument (not to be confused with the dictionary's keys) for sorted allows us to define specific functions to use when sorting the items, as an iterator (in our dict object). In both examples above the keys and values were both the items to sort and the items used for comparison, but if we want to sort our dict keys using our dict values, then we would tell sorted to do that via its key argument. Such as follows:
+#
+# 1
+# 2
+# 3
+# 4
+# # Use the __getitem__ method as the key function
+# >>> sorted(numbers, key=numbers.__getitem__)
+# # In order of sorted values: [1, 2, 3, 4]
+# ['first', 'second', 'third', 'Fourth']
+# With this statement we told sorted to sort the numbers dict (its keys), and to sort them by using numbers' class method for retrieving values — essentially we told it "for every key in numbers, use the corresponding value in numbers for comparison to sort it.".
+#
+# We can also sort the values in numbers by its keys, but using the key argument would be more complicated (there is no dictionary method to return a key by using a certain value, as with the list.index method). Instead we can use a list comprehension to keep it simple:
+#
+# 1
+# 2
+# 3
+# 4
+# # Uses the first element of each tuple to compare
+# >>> [value for (key, value) in sorted(numbers.items())]
+# [4, 1, 2, 3]
+# # In order of sorted keys: ['Fourth', 'first', 'second', 'third']
+# Now the other argument to consider is the reverse argument. If this is True, the order will be reversed (descending), otherwise if it's False it will be in the default (ascending) order, it's as simple as that. For example, as with the two previous sorts:
+#
+# 1
+# 2
+# 3
+# 4
+# >>> sorted(numbers, key=numbers.__getitem__, reverse=True)
+# ['Fourth', 'third', 'second', 'first']
+# >>> [value for (key, value) in sorted(numbers.items(), reverse=True)]
+# [3, 2, 1, 4]
+# These sorts are still fairly simple, but let's look at some special algorithms we might use with strings or numbers to sort our dictionary.
+#
+# Sorting Python dictionaries with String and Number Algorithms
+# Sorting strings in alphabetical order is very common, however using sorted might not sort the keys/values of our dict in the "proper" alphabetical order, i.e. ignoring the case. To ignore the case we can again utilize the key argument and the str.lower (or str.upper) method so that all strings are the same case when comparing them:
+#
+# 1
+# 2
+# 3
+# # Won't change the items to be returned, only while sorting
+# >>> sorted(numbers, key=str.lower)
+# ['first', 'Fourth', 'second', 'third']
+# For associating strings with numbers, we need an extra element of context to associate them properly. Let's make a new dict object first:
+#
+# 1
+# 2
+# 3
+# 4
+# 5
+# >>> month = dict(one='January',
+#                  two='February',
+#                  three='March',
+#                  four='April',
+#                  five='May')
+# This contains only string keys and values, so there'd be no way to put the months in the correct order without additional context. To do so we can simply create another dictionary to map the strings to their numerical values and use that dictionary's __getitem__ method to compare the values in our month dictionary:
+#
+# 1
+# 2
+# 3
+# >>> numbermap = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5}
+# >>> sorted(month, key=numbermap.__getitem__)
+# ['one', 'two', 'three', 'four', 'five']
+# As we can see, it still returned a sorted list of its first argument (month). To return the months in order, we'll use a list comprehension again:
+#
+# 1
+# 2
+# 3
+# # Assuming the keys in both dictionaries are EXACTLY the same:
+# >>> [month[i] for i in sorted(month, key=numbermap.__getitem__)]
+# ['January', 'February', 'March', 'April', 'May']
+# If we wanted to sort our key/value strings by the number of repeated letters in each string, we could define our own custom method to use in the sorted key argument:
+#
+# 1
+# 2
+# 3
+# 4
+# 5
+# 6
+# 7
+# 8
+# 9
+# 10
+# 11
+# def repeats(string):
+#     # Lower the case in the string
+#     string = string.lower()
+#
+#     # Get a set of the unique letters
+#     uniques = set(string)
+#
+#     # Count the max occurrences of each unique letter
+#     counts = [string.count(letter) for letter in uniques]
+#
+#     return max(counts)
+# Using the function can be performed as follows:
+#
+# 1
+# 2
+# 3
+# # From greatest to least repeats
+# >>> sorted(month.values(), key=repeats, reverse=True)
+# ['February', 'January', 'March', 'April', 'May']
+# More advanced sorting functionality
+# Now let's say we have a dictionary keeping track of the number of students in a class for each of these months, like so:
+#
+# 1
+# >>> trans = dict(January=33, February=30, March=24, April=0, May=7)
+# If we want to organize the class sizes with the even numbers first and odd numbers second, we could do so with a definition like this:
+#
+# 1
+# 2
+# 3
+# 4
+# 5
+# 6
+# 7
+# 8
+# 9
+# 10
+# def evens1st(num):
+#     # Test with modulus (%) two
+#     if num == 0:
+#         return -2
+#     # It's an even number, return the value
+#     elif num % 2 == 0:
+#         return num
+#     # It's odd, return the negated inverse
+#     else:
+#         return -1 * (num ** -1)
+# Using the evens1st sorting function, gives us the following output:
+#
+# 1
+# 2
+# 3
+# # Max class size first
+# >>> sorted(trans.values(), key=evens1st, reverse=True)
+# [30, 24, 33, 7, 0]
+# Likewise we could list the odd class sizes first, and perform many other algorithms to get our sort exactly how we want. There are many other intricate sorting methods and tricks you could use with dictionaries (or any iterable object), but for now hopefully these examples have provided a good starting point.
+#
+# [1, 2, 3, 4]
+# >>> numbers
+# {'second': 2, 'Fourth': 4, 'third': 3, 'first': 1}
+# >>> sorted_keys = sorted(numbers.keys())
+# >>> sorted_keys
+# ['Fourth', 'first', 'second', 'third']
+# >>> sorted_list = []
+# >>> for key in sorted_keys:
+# ...   sorted_list.append(numbers[key])
+# ...
+# >>> print sorted_list
+# [4, 1, 2, 3]
+#
+# or
+#
+# [numbers[key] for key in sorted(numbers.keys())]
+#
